@@ -1,4 +1,24 @@
 // script.js
+// Menu toggle functionality
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+
+menuToggle.addEventListener('click', function() {
+    sidebar.classList.toggle('active');
+});
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', function(event) {
+    if (window.innerWidth <= 768) {
+        const isClickInsideSidebar = sidebar.contains(event.target);
+        const isClickOnMenuToggle = menuToggle.contains(event.target);
+        
+        if (!isClickInsideSidebar && !isClickOnMenuToggle && sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    }
+});
+
 // Send message functionality
 document.querySelector('.send-button').addEventListener('click', sendMessage);
 
