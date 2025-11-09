@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ራኪ ይቅርታ</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="floating-hearts" id="floatingHearts"></div>
@@ -20,30 +20,30 @@
         <div class="machine">
             <h2>👇 emoji በመንካት ምን ያህል አስከፍቼሽ እንደነበር? ከዛም ከታች የምትመለከቺውን rose እንጨት ንኪው</h2>
             <div class="mood-meter">
-                <div class="mood" data-mood="angry">
+                <div class="mood" data-mood="angry" onclick="selectMood('angry', this)">
                     <span class="mood-emoji">😠</span>
                     <span class="mood-label">Angry</span>
                 </div>
-                <div class="mood" data-mood="sad">
+                <div class="mood" data-mood="sad" onclick="selectMood('sad', this)">
                     <span class="mood-emoji">😢</span>
                     <span class="mood-label">Sad</span>
                 </div>
-                <div class="mood" data-mood="confused">
+                <div class="mood" data-mood="confused" onclick="selectMood('confused', this)">
                     <span class="mood-emoji">😕</span>
                     <span class="mood-label">Confused</span>
                 </div>
-                <div class="mood" data-mood="amused">
+                <div class="mood" data-mood="amused" onclick="selectMood('amused', this)">
                     <span class="mood-emoji">😏</span>
                     <span class="mood-label">Amused</span>
                 </div>
-                <div class="mood" data-mood="happy">
+                <div class="mood" data-mood="happy" onclick="selectMood('happy', this)">
                     <span class="mood-emoji">😊</span>
                     <span class="mood-label">Happy</span>
                 </div>
             </div>
             
             <div class="lever-container">
-                <div class="lever" id="apologyLever"></div>
+                <div class="lever" id="apologyLever" onclick="pullLever()"></div>
                 <div class="lever-base"></div>
             </div>
             
@@ -53,7 +53,7 @@
                 </div>
             </div>
             
-            <button class="reset-btn" id="resetBtn">Try Another Apology</button>
+            <button class="reset-btn" id="resetBtn" onclick="resetMachine()">Try Another Apology</button>
         </div>
     </div>
 
