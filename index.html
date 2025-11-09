@@ -3,141 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>My Apology Machine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button class="menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
+    <div class="floating-hearts" id="floatingHearts"></div>
     
-    <div class="app-container">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="profile-section">
-                <div class="profile-avatar">R</div>
-                <div class="profile-name">Raki</div>
-            </div>
-            
-            <div class="search-bar">
-                <input type="text" placeholder="Search...">
-            </div>
-            
-            <div class="contacts-list">
-                <div class="contact active" data-contact="x">
-                    <div class="contact-avatar">X</div>
-                    <div class="contact-info">
-                        <div class="contact-name">X</div>
-                        <div class="contact-last-message">አስከፍቼሽ ከሆነ 😔🙏</div>
-                    </div>
-                </div>
-                
-                <div class="empty-contacts">
-                    <i class="fas fa-user-plus"></i>
-                    <p>No other contacts</p>
-                </div>
-            </div>
+    <div class="container">
+        <h1><span class="heart">❤️</span> Apology Machine <span class="heart">❤️</span></h1>
+        
+        <div class="message-bubble" id="introBubble">
+            <p>I messed up, and I know it. Words alone aren't enough, so I built this machine to show you how sorry I am!</p>
         </div>
         
-        <!-- Chat Area -->
-        <div class="chat-area">
-            <div class="chat-header">
-                <div class="chat-header-left">
-                    <div class="chat-header-avatar">X</div>
-                    <div class="chat-header-info">
-                        <div class="chat-header-name">X</div>
-                        <div class="chat-header-status">online</div>
-                    </div>
+        <div class="machine">
+            <h2>How are you feeling right now?</h2>
+            <div class="mood-meter">
+                <div class="mood" data-mood="angry">
+                    <div class="mood-emoji">😠</div>
+                    <div class="mood-label">Angry</div>
                 </div>
-                <div class="chat-header-actions">
-                    <i class="fas fa-phone-alt"></i>
-                    <i class="fas fa-video"></i>
-                    <i class="fas fa-ellipsis-v"></i>
+                <div class="mood" data-mood="sad">
+                    <div class="mood-emoji">😢</div>
+                    <div class="mood-label">Sad</div>
                 </div>
-            </div>
-            
-            <div class="chat-messages">
-                <!-- Top Message First -->
-                <div class="message received">
-                   endiw sewn mebolek☹️ ere tey gn ayderegm
-                    <div class="message-time">10:15 AM</div>
-                    
-                    <!-- 10 Funny Animation Images -->
-                    <div class="animations-container">
-                        <div class="animation">
-                            <div class="bouncing-heart">❤️</div>
-                        </div>
-                        <div class="animation">
-                            <div class="spinning-emoji">🤪</div>
-                        </div>
-                        <div class="animation">
-                            <div class="pulsing-star">⭐</div>
-                        </div>
-                        <div class="animation">
-                            <div class="waving-hand">👋</div>
-                        </div>
-                        <div class="animation">
-                            <div class="jumping-ghost">👻</div>
-                        </div>
-                        <div class="animation">
-                            <div class="rotating-pizza">🍕</div>
-                        </div>
-                        <div class="animation">
-                            <div class="beating-heart">💖</div>
-                        </div>
-                        <div class="animation">
-                            <div class="floating-balloon">🎈</div>
-                        </div>
-                        <div class="animation">
-                            <div class="shaking-laughing">😂</div>
-                        </div>
-                        <div class="animation">
-                            <div class="zooming-rocket">🚀</div>
-                        </div>
-                        <div class="animation">
-                            <div class="dancing-cat">😺</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Big Girl Animation -->
-                    <div class="big-girl-animation">
-                        <div class="big-girl">
-                            <div class="big-hair"></div>
-                            <div class="big-head">
-                                <div class="big-eye big-eye-left"></div>
-                                <div class="big-eye big-eye-right"></div>
-                                <div class="big-mouth"></div>
-                            </div>
-                            <div class="big-arm big-arm-left"></div>
-                            <div class="big-body"></div>
-                            <div class="big-arm big-arm-right"></div>
-                            <div class="big-dress"></div>
-                            <div class="big-leg big-leg-left"></div>
-                            <div class="big-leg big-leg-right"></div>
-                            <div class="big-heart">❤️</div>
-                        </div>
-                    </div>
+                <div class="mood" data-mood="confused">
+                    <div class="mood-emoji">😕</div>
+                    <div class="mood-label">Confused</div>
                 </div>
-
-                <!-- Apology Message -->
-                <div class="apology-message">
-                    <div class="apology-emoji">😔😢🙏</div>
-                    <div class="apology-text">ይቅርታ</div>
+                <div class="mood" data-mood="amused">
+                    <div class="mood-emoji">😏</div>
+                    <div class="mood-label">Amused</div>
+                </div>
+                <div class="mood" data-mood="happy">
+                    <div class="mood-emoji">😊</div>
+                    <div class="mood-label">Happy</div>
                 </div>
             </div>
             
-            <div class="chat-input">
-                <div class="mobile-input-container">
-                    <i class="fas fa-paperclip mobile-icon"></i>
-                    <i class="fas fa-camera mobile-icon"></i>
-                    <i class="far fa-laugh mobile-icon"></i>
-                    <input type="text" placeholder="Type a message..." class="mobile-input">
-                    <button class="send-button mobile-send">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
+            <h2>Pull the lever for your personalized apology!</h2>
+            <div class="lever-container">
+                <div class="lever" id="apologyLever"></div>
+                <div class="lever-base"></div>
+            </div>
+            
+            <div class="apology-display" id="apologyDisplay">
+                <div class="apology-text" id="apologyText">
+                    <span class="dancing-emoji">🤖</span> Waiting for your apology... <span class="dancing-emoji">🤖</span>
                 </div>
             </div>
+            
+            <button class="reset-btn" id="resetBtn">Try Another Apology</button>
         </div>
     </div>
 
