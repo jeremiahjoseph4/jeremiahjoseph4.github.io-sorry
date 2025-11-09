@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -11,29 +12,32 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-x: hidden;
     position: relative;
+    padding: 20px 0;
 }
 
 .container {
-    width: 90%;
+    width: 95%;
     max-width: 800px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
-    padding: 40px;
+    padding: 30px 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
     text-align: center;
     position: relative;
     z-index: 10;
+    margin-top: 20px;
 }
 
 h1 {
     color: #ff6b6b;
-    margin-bottom: 30px;
-    font-size: 2.5rem;
+    margin-bottom: 25px;
+    font-size: 2rem;
     position: relative;
     display: inline-block;
+    line-height: 1.2;
 }
 
 .heart {
@@ -51,64 +55,73 @@ h1 {
 .machine {
     background: #f8f9fa;
     border-radius: 15px;
-    padding: 30px;
-    margin: 20px 0;
+    padding: 25px 15px;
+    margin: 15px 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
+.machine h2 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
 .lever-container {
-    margin: 30px 0;
+    margin: 25px 0;
     position: relative;
-    height: 100px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lever {
-    width: 30px;
-    height: 80px;
+    width: 40px;
+    height: 70px;
     background: linear-gradient(to bottom, #ff9a9e, #ff6b6b);
-    border-radius: 15px 15px 0 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    border-radius: 20px 20px 0 0;
+    position: relative;
     cursor: pointer;
     transition: transform 0.3s ease;
     transform-origin: bottom center;
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
 }
 
 .lever:active {
-    transform: translateX(-50%) rotate(30deg);
+    transform: rotate(30deg);
 }
 
 .lever-base {
-    width: 100px;
-    height: 20px;
+    width: 120px;
+    height: 25px;
     background: #555;
-    border-radius: 10px;
+    border-radius: 12px;
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: -5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .apology-display {
-    min-height: 150px;
-    padding: 20px;
+    min-height: 120px;
+    padding: 20px 15px;
     background: white;
     border-radius: 10px;
     margin: 20px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #333;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .apology-text {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    line-height: 1.5;
 }
 
 .show-text {
@@ -119,9 +132,10 @@ h1 {
 .emoji-rain {
     position: absolute;
     top: -50px;
-    font-size: 30px;
+    font-size: 25px;
     animation: fall linear forwards;
     z-index: 1;
+    pointer-events: none;
 }
 
 @keyframes fall {
@@ -134,13 +148,18 @@ h1 {
     background: linear-gradient(to right, #ff9a9e, #ff6b6b);
     color: white;
     border: none;
-    padding: 12px 30px;
+    padding: 15px 35px;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .reset-btn:hover {
@@ -148,39 +167,57 @@ h1 {
     box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
 }
 
+.reset-btn:active {
+    transform: translateY(-1px);
+}
+
 .mood-meter {
     display: flex;
     justify-content: space-around;
-    margin: 30px 0;
+    margin: 25px 0;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .mood {
     text-align: center;
     cursor: pointer;
     transition: transform 0.3s ease;
+    flex: 1;
+    min-width: 60px;
+    padding: 10px 5px;
+    border-radius: 10px;
 }
 
 .mood:hover {
     transform: scale(1.1);
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.mood:active {
+    transform: scale(0.95);
 }
 
 .mood-emoji {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .mood-label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #666;
+    font-weight: 500;
 }
 
 .selected {
     animation: bounce 0.5s ease;
+    background: rgba(255, 107, 107, 0.15);
 }
 
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-15px); }
 }
 
 .floating-hearts {
@@ -197,7 +234,7 @@ h1 {
     position: absolute;
     color: rgba(255, 107, 107, 0.7);
     animation: float-up 4s linear forwards;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 @keyframes float-up {
@@ -221,8 +258,8 @@ h1 {
     position: relative;
     background: white;
     border-radius: 20px;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 18px 20px;
+    margin: 15px 0;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     opacity: 0;
     transform: scale(0.8);
@@ -245,10 +282,16 @@ h1 {
     border-color: white transparent;
 }
 
+.message-bubble p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+}
+
 .dancing-emoji {
     display: inline-block;
     animation: dance 1s infinite alternate;
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 @keyframes dance {
@@ -256,20 +299,92 @@ h1 {
     100% { transform: rotate(5deg); }
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
+/* Enhanced mobile styles */
+@media (max-width: 768px) {
+    body {
+        padding: 10px 0;
     }
     
     .container {
-        padding: 20px;
+        width: 98%;
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+    
+    .machine {
+        padding: 20px 10px;
+    }
+    
+    .machine h2 {
+        font-size: 1.2rem;
+    }
+    
+    .mood-meter {
+        gap: 5px;
     }
     
     .mood-emoji {
         font-size: 2rem;
     }
-}
-        height: 150px;
+    
+    .mood-label {
+        font-size: 0.8rem;
+    }
+    
+    .apology-display {
+        min-height: 100px;
+        padding: 15px 10px;
+        font-size: 1rem;
+    }
+    
+    .reset-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .lever-container {
+        height: 70px;
+    }
+    
+    .lever {
+        width: 35px;
+        height: 60px;
+    }
+    
+    .lever-base {
+        width: 100px;
+        height: 20px;
     }
 }
 
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+    
+    .mood-emoji {
+        font-size: 1.8rem;
+    }
+    
+    .apology-display {
+        font-size: 0.95rem;
+    }
+    
+    .dancing-emoji {
+        font-size: 1.5rem;
+    }
+}
+
+/* Prevent zoom on input focus for iOS */
+@supports (-webkit-touch-callout: none) {
+    .container {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
