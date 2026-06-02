@@ -1,63 +1,528 @@
-<!DOCTYPE html>
+
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ራኪ ይቅርታ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🌸 Rakeb's Birthday Countdown 🌸</title>
+    <!-- Google Fonts for elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+    <!-- canvas-confetti library for joyful celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* just for smoother visuals */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fff9f0 0%, #ffe6e6 100%);
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        /* animated flower background elements */
+        .floating-flower {
+            position: absolute;
+            font-size: 2.2rem;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+            animation: floatAround 18s infinite ease-in-out;
+            filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.1));
+        }
+
+        @keyframes floatAround {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(8deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* main card container */
+        .birthday-card {
+            background: rgba(255, 250, 240, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: 72px 48px 80px 48px;
+            box-shadow: 0 30px 45px rgba(238, 130, 160, 0.3), 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 750px;
+            width: 100%;
+            padding: 2rem 2rem 3rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,215,190,0.8);
+            z-index: 10;
+            position: relative;
+        }
+
+        /* name & title styling */
+        .hero-name {
+            font-family: 'Playfair Display', cursive;
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #e84393, #ff8c5a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 12px rgba(255,105,180,0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #b45f6b;
+            background: #fff0e7;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 1.8rem;
+            box-shadow: inset 0 1px 2px #fff9, 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* countdown display layout */
+        .countdown-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .time-box {
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            padding: 1rem 0.8rem;
+            min-width: 95px;
+            border-radius: 48px;
+            box-shadow: 0 15px 25px rgba(243, 156, 156, 0.25);
+            transition: transform 0.2s;
+            border: 1px solid #ffddbb;
+        }
+
+        .time-box span:first-child {
+            font-size: 2.8rem;
+            font-weight: 800;
+            display: block;
+            line-height: 1.2;
+            color: #d6426b;
+            text-shadow: 2px 2px 8px #ffc0cb;
+        }
+
+        .time-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #a55767;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .countdown-message {
+            font-size: 1.35rem;
+            background: #ffe3dcb3;
+            padding: 0.7rem 1rem;
+            border-radius: 100px;
+            display: inline-block;
+            margin-top: 0.8rem;
+            font-weight: 600;
+            color: #bb5a6e;
+        }
+
+        /* birthday celebration block (hidden initially) */
+        .birthday-block {
+            display: none;
+            animation: popGlow 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
+        }
+
+        .birthday-block.active {
+            display: block;
+        }
+
+        .celebration-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff4d6d, #ffb347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 1rem 0;
+        }
+
+        .bday-message {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #c44569;
+            margin: 1rem 0;
+            background: #fff2ea;
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+        }
+
+        .cake-emoji {
+            font-size: 5rem;
+            display: inline-block;
+            animation: bounce 1s infinite alternate;
+            margin: 0.5rem;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-12px); }
+        }
+
+        @keyframes popGlow {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* flower decorations on corners & special emoji row */
+        .flower-emoji-deco {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            flex-wrap: wrap;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: #da7b8c;
+            margin-top: 2rem;
+            border-top: 1px dashed #ffc3a5;
+            padding-top: 1rem;
+        }
+
+        /* confetti button if needed */
+        .celebrate-btn {
+            background: #ff8d6b;
+            border: none;
+            font-size: 1rem;
+            padding: 0.5rem 1.3rem;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-top: 1.2rem;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .celebrate-btn:hover {
+            background: #ff6b4a;
+            transform: scale(0.97);
+        }
+
+        /* responsive */
+        @media (max-width: 550px) {
+            .birthday-card {
+                padding: 1.5rem;
+            }
+            .hero-name {
+                font-size: 2.3rem;
+            }
+            .time-box span:first-child {
+                font-size: 2rem;
+            }
+            .time-box {
+                min-width: 70px;
+                padding: 0.6rem 0.2rem;
+            }
+            .time-label {
+                font-size: 0.7rem;
+            }
+            .celebration-title {
+                font-size: 2rem;
+            }
+            .bday-message {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* additional glowing effects */
+        .glow-text {
+            text-shadow: 0 0 6px #ffb7c5;
+        }
+    </style>
 </head>
 <body>
-    <div class="floating-hearts" id="floatingHearts"></div>
-    
-    <div class="container">
-        <h1><span class="heart">❤️</span> ራኪ ይቅርታ <span class="heart">❤️</span></h1>
-        
-        <div class="message-bubble" id="introBubble">
-            <p>የዛሬ ሳምንት ሳላስከፋሽ አልቀርም አስከፋቼሽ ከሆነ ይቅርታ</p>
+
+<!-- floating flowers and emojis (background decoration) -->
+<div class="floating-flower" style="top: 8%; left: 3%; font-size: 2.8rem;">🌸</div>
+<div class="floating-flower" style="top: 75%; left: 88%; font-size: 3rem; animation-duration: 22s;">🌼</div>
+<div class="floating-flower" style="top: 15%; left: 92%; font-size: 2.4rem; animation-duration: 15s;">🌻</div>
+<div class="floating-flower" style="top: 85%; left: 5%; font-size: 2.6rem; animation-duration: 19s;">🌺</div>
+<div class="floating-flower" style="top: 45%; left: 2%; font-size: 2rem; animation-duration: 20s;">🌷</div>
+<div class="floating-flower" style="top: 60%; left: 94%; font-size: 2.2rem; animation-duration: 17s;">💐</div>
+<div class="floating-flower" style="top: 30%; left: 96%; font-size: 2.5rem; animation-duration: 21s;">🌹</div>
+<div class="floating-flower" style="top: 20%; left: 1%; font-size: 2.1rem; animation-duration: 14s;">🌸</div>
+
+<main class="birthday-card">
+    <!-- Countdown section (visible by default) -->
+    <div id="countdownSection">
+        <div class="flower-emoji-deco">
+            <span>🎂</span> <span>🌸</span> <span>🎈</span> <span>🌼</span> <span>🎁</span> <span>🌻</span>
         </div>
-        
-        <div class="machine">
-            <h2>👇 emoji በመንካት ምን ያህል አስከፍቼሽ እንደነበር? ከዛም ከታች የምትመለከቺውን rose እንጨት ንኪው</h2>
-            <div class="mood-meter">
-                <div class="mood" data-mood="angry" onclick="selectMood('angry', this)">
-                    <span class="mood-emoji">😠</span>
-                    <span class="mood-label">Angry</span>
-                </div>
-                <div class="mood" data-mood="sad" onclick="selectMood('sad', this)">
-                    <span class="mood-emoji">😢</span>
-                    <span class="mood-label">Sad</span>
-                </div>
-                <div class="mood" data-mood="confused" onclick="selectMood('confused', this)">
-                    <span class="mood-emoji">😕</span>
-                    <span class="mood-label">Confused</span>
-                </div>
-                <div class="mood" data-mood="amused" onclick="selectMood('amused', this)">
-                    <span class="mood-emoji">😏</span>
-                    <span class="mood-label">Amused</span>
-                </div>
-                <div class="mood" data-mood="happy" onclick="selectMood('happy', this)">
-                    <span class="mood-emoji">😊</span>
-                    <span class="mood-label">Happy</span>
-                </div>
-            </div>
-            
-            <div class="lever-container">
-                <div class="lever" id="apologyLever" onclick="pullLever()"></div>
-                <div class="lever-base"></div>
-            </div>
-            
-            <div class="apology-display" id="apologyDisplay">
-                <div class="apology-text" id="apologyText">
-                    <span class="dancing-emoji">🤖</span> Click a mood to start... <span class="dancing-emoji">🤖</span>
-                </div>
-            </div>
-            
-            <button class="reset-btn" id="resetBtn" onclick="resetMachine()">Try Another Apology</button>
+        <h1 class="hero-name">Rakeb</h1>
+        <div class="subtitle">✨ Birthday Countdown ✨</div>
+
+        <div class="countdown-wrapper" id="timerDisplay">
+            <div class="time-box"><span id="days">00</span><div class="time-label">Days</div></div>
+            <div class="time-box"><span id="hours">00</span><div class="time-label">Hours</div></div>
+            <div class="time-box"><span id="minutes">00</span><div class="time-label">Minutes</div></div>
+            <div class="time-box"><span id="seconds">00</span><div class="time-label">Seconds</div></div>
         </div>
+        <div class="countdown-message" id="infoMessage">
+            🌟 Until June 8th, Rakeb's special day! 🌟
+        </div>
+        <div class="flower-emoji-deco" style="margin-top: 1rem;">
+            <span>🎀</span> <span>🌸</span> <span>🎵</span> <span>🌼</span> <span>💖</span>
+        </div>
+        <footer class="footer-note">
+            💌 Every flower blooms for you, Rakeb! 💌
+        </footer>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Birthday celebration block (hidden initially) -->
+    <div id="birthdayBlock" class="birthday-block">
+        <div class="flower-emoji-deco">
+            <span>🎉</span><span>🌸</span><span>🎂</span><span>🌺</span><span>🎈</span><span>🌼</span><span>🎊</span>
+        </div>
+        <div class="cake-emoji">🎂🎁🎈</div>
+        <h1 class="hero-name" style="font-size:2.8rem;">🎀 Rakeb 🎀</h1>
+        <div class="celebration-title">HAPPY BIRTHDAY!</div>
+        <div class="bday-message">✨ You are a beautiful soul! ✨<br>🌸 May your day bloom with joy 🌸</div>
+        <div class="cake-emoji">🌸💖🌸</div>
+        <div class="flower-emoji-deco">
+            <span>🌷🌹🌻🌼🌸🌺💐</span>
+        </div>
+        <button class="celebrate-btn" id="extraConfettiBtn">🎉 Pop more confetti 🎉</button>
+        <footer class="footer-note">💕 Sending infinite love & smiles 💕</footer>
+    </div>
+</main>
+
+<script>
+    // -------------------------------
+    // Birthday Countdown Logic for Rakeb (June 8)
+    // -------------------------------
+    const targetMonth = 5;   // June = 5 (zero-indexed)
+    const targetDay = 8;
+
+    let countdownInterval = null;
+    let celebrationActive = false;   // ensure birthday effect triggered once
+    let confettiTriggered = false;
+
+    // DOM elements
+    const countdownSection = document.getElementById('countdownSection');
+    const birthdayBlock = document.getElementById('birthdayBlock');
+    const daysSpan = document.getElementById('days');
+    const hoursSpan = document.getElementById('hours');
+    const minutesSpan = document.getElementById('minutes');
+    const secondsSpan = document.getElementById('seconds');
+    const infoMsgSpan = document.getElementById('infoMessage');
+
+    // helper: check if today is Rakeb's birthday (June 8 local date)
+    function isBirthdayToday() {
+        const today = new Date();
+        const currentMonth = today.getMonth();    // 0-11
+        const currentDate = today.getDate();
+        return (currentMonth === targetMonth && currentDate === targetDay);
+    }
+
+    // get next birthday date object (midnight, local time)
+    function getNextBirthdayDate() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        // set birthday this year
+        let birthdayThisYear = new Date(currentYear, targetMonth, targetDay, 0, 0, 0, 0);
+        // if today is strictly after this year's birthday OR (same day but we already filtered out birthday case? but for countdown we never call when birthday active, but safe)
+        if (now > birthdayThisYear) {
+            // move to next year
+            return new Date(currentYear + 1, targetMonth, targetDay, 0, 0, 0, 0);
+        } else {
+            return birthdayThisYear;
+        }
+    }
+
+    // format number with leading zeros
+    function formatNumber(num) {
+        return num < 10 ? '0' + num : num;
+    }
+
+    // update countdown display (when it's not birthday)
+    function updateCountdown() {
+        if (celebrationActive) return; // already in birthday mode, stop updates
+
+        const now = new Date();
+        // double-check if birthday (in case interval crosses midnight)
+        if (isBirthdayToday()) {
+            activateBirthdayMode();
+            return;
+        }
+
+        const targetDate = getNextBirthdayDate();
+        const diffMs = targetDate - now;
+
+        if (diffMs <= 0) {
+            // should be birthday but double-check: maybe just reached zero
+            if (isBirthdayToday()) {
+                activateBirthdayMode();
+            } else {
+                // Fallback: recalc target
+                if (countdownInterval) clearInterval(countdownInterval);
+                activateBirthdayMode();
+            }
+            return;
+        }
+
+        // calculate time components
+        const totalSeconds = Math.floor(diffMs / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        daysSpan.innerText = formatNumber(days);
+        hoursSpan.innerText = formatNumber(hours);
+        minutesSpan.innerText = formatNumber(minutes);
+        secondsSpan.innerText = formatNumber(seconds);
+
+        // dynamic message with personality
+        if (days === 0 && hours < 24) {
+            infoMsgSpan.innerHTML = "🎈 Almost here, Rakeb! 🎈 Tomorrow is the big day! 💖";
+        } else if (days <= 3 && days > 0) {
+            infoMsgSpan.innerHTML = "🌸 SO CLOSE! 🌸 Get ready to celebrate Rakeb! 🎂";
+        } else {
+            infoMsgSpan.innerHTML = "🌼 Counting every bloom until June 8th, Rakeb! 🌼";
+        }
+    }
+
+    // trigger cheerful confetti effect (canvas-confetti)
+    function burstConfetti() {
+        // multiple bursts for joy
+        canvasConfetti({ particleCount: 130, spread: 85, origin: { y: 0.6 }, colors: ['#ff8c94', '#ffaaa5', '#ffd6a5', '#c7f9cc'] });
+        setTimeout(() => {
+            canvasConfetti({ particleCount: 80, spread: 110, origin: { y: 0.5, x: 0.3 }, startVelocity: 20 });
+            canvasConfetti({ particleCount: 80, spread: 110, origin: { y: 0.5, x: 0.7 }, startVelocity: 20 });
+        }, 150);
+        setTimeout(() => {
+            canvasConfetti({ particleCount: 200, spread: 60, origin: { y: 0.7 }, startVelocity: 15, decay: 0.9 });
+        }, 400);
+    }
+
+    // activate birthday mode: show celebration, hide countdown, bursts, stop timer
+    function activateBirthdayMode() {
+        if (celebrationActive) return;
+        celebrationActive = true;
+
+        // clear interval to stop countdown updates
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+        }
+
+        // switch UI visibility
+        countdownSection.style.display = 'none';
+        birthdayBlock.classList.add('active');
+        
+        // optional: also add extra floating birthday emojis dynamically? already nice.
+        if (!confettiTriggered) {
+            confettiTriggered = true;
+            // big celebration confetti party!
+            burstConfetti();
+            // add extra bursts every 0.6 sec for a happy moment
+            let burstCount = 0;
+            const intervalConf = setInterval(() => {
+                if (burstCount >= 5) {
+                    clearInterval(intervalConf);
+                } else {
+                    canvasConfetti({ particleCount: 90, spread: 70, origin: { y: 0.5 }, startVelocity: 18 });
+                    burstCount++;
+                }
+            }, 450);
+        }
+    }
+
+    // manual confetti button for extra fun (within birthday block)
+    function setupManualConfetti() {
+        const btn = document.getElementById('extraConfettiBtn');
+        if (btn) {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // throw massive confetti rain
+                canvasConfetti({ particleCount: 220, spread: 100, origin: { y: 0.5 }, startVelocity: 25 });
+                canvasConfetti({ particleCount: 100, spread: 130, origin: { y: 0.4, x: 0.2 }, startVelocity: 22 });
+                canvasConfetti({ particleCount: 100, spread: 130, origin: { y: 0.6, x: 0.8 }, startVelocity: 22 });
+                // also popping little flower-like shapes? But confetti is great
+                setTimeout(() => {
+                    canvasConfetti({ particleCount: 400, spread: 55, origin: { y: 0.7 }, startVelocity: 10, colors: ['#ffb7b2', '#ffdac1', '#e2f0cb'] });
+                }, 200);
+            });
+        }
+    }
+
+    // initialization: check if birthday right now, or start countdown
+    function init() {
+        if (isBirthdayToday()) {
+            // immediately show birthday mode
+            countdownSection.style.display = 'none';
+            birthdayBlock.classList.add('active');
+            celebrationActive = true;
+            if (!confettiTriggered) {
+                confettiTriggered = true;
+                burstConfetti();
+                let burstIdx = 0;
+                const bInterval = setInterval(() => {
+                    if (burstIdx >= 4) clearInterval(bInterval);
+                    else { canvasConfetti({ particleCount: 100, spread: 80, origin: { y: 0.5 } }); burstIdx++; }
+                }, 500);
+            }
+        } else {
+            // start normal countdown
+            countdownSection.style.display = 'block';
+            birthdayBlock.classList.remove('active');
+            celebrationActive = false;
+            confettiTriggered = false;
+            // update immediately and set interval
+            updateCountdown();
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                updateCountdown();
+            }, 1000);
+        }
+        setupManualConfetti();
+    }
+
+    // Re-run countdown on visibility change to avoid time drifts (optional)
+    function revalidateOnFocus() {
+        if (!celebrationActive) {
+            updateCountdown();
+        }
+    }
+    window.addEventListener('focus', revalidateOnFocus);
+    
+    // start everything
+    init();
+
+    // Also if someone wants to re-trigger birthday scenario due to date crossing on very rare case, 
+    // we check in updateCountdown and it will toggle birthday when it becomes june 8
+    // For safety, manual check after midnight if page stays open:
+    setInterval(() => {
+        if (!celebrationActive && isBirthdayToday()) {
+            activateBirthdayMode();
+        }
+    }, 30000); // every 30 seconds check if birthday arrived after midnight
+</script>
 </body>
 </html>
 
